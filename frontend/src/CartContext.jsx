@@ -8,8 +8,7 @@ export const CartProvider = ({ children }) => {
     
     const [cart, setCart] = useState([]);
     const [total, setTotal] = useState(0);
-
-    console.log(cart);
+    const [adminList,setList]=useState([]);
 
     const addToCart = (item) => {
     let index = cart.findIndex((i) => i.id === item.id);
@@ -43,12 +42,16 @@ const PresentInCart=(id)=>{
 
 
 
+const AddAdmin=(id)=>{
+    const found= adminList.findIndex((ix)=> ix==id);
+    if(found== -1)
+    {
+        setList(prev=>[...prev,id]);
+    }
+}
 
 
-
-
-
-
+//List of Orders is here with syntax
 const [Orders,SetOrders]=useState([{
     name:"Bharosa",
     amount:420,
@@ -57,7 +60,8 @@ const [Orders,SetOrders]=useState([{
 }]);
 
 const AddOrder=(item)=>{
-    SetOrders(prev=>[...prev,item])
+
+    SetOrders(prev=>[...prev,...item])
 }
 const ClearCart=()=>{
     setCart([]);
@@ -65,10 +69,18 @@ const ClearCart=()=>{
 
 }
 
+//List of All Items is here....
 const [FoodList,setMenu]=useState(FoodList1);
 
+const AddItem=(item)=>{
+    setMenu([...FoodList,item])
+}
+
+
+//Category Create,Add,View All
+
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart,RemoveAt,total, setTotal,PresentInCart,ClearCart ,Orders,AddOrder,FoodList,setMenu,SetOrders}}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart,RemoveAt,total, setTotal,PresentInCart,ClearCart ,Orders,AddOrder,FoodList,setMenu,SetOrders,adminList,AddAdmin}}>
             {children}
         </CartContext.Provider>
     );
