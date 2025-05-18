@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 .Navbar_Top{
-    @apply relative  w-full flex justify-around items-center font-[outfit]
+    @apply sticky top-0 bg-white w-full flex justify-around items-center font-[outfit]
 }
 
 .Logo_style{
     @apply text-3xl font-extrabold text-orange-500 max-sm:hidden
 }
 .Button_style{
-    @apply m-2 p-3 pt-0 pb-0 border-2 rounded-xl
+    @apply m-2 px-2 outline-2 outline-amber-600 rounded-full
 }
 
 .Central_Default{
@@ -16,7 +16,7 @@
 }
 
 .Circular_Box{
-    @apply object-cover min-w-20 min-h-20 rounded-full;
+    @apply object-cover w-20 h-20 min-h-20 min-w-20 rounded-full;
 }
 .Circular_Box:active{
     @apply outline-5 outline-orange-500;
@@ -77,4 +77,25 @@
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
   /* background-color: #3e8e41; */
+}
+
+*{
+  scroll-behavior: smooth;
+}
+
+.grid-fade-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
 }

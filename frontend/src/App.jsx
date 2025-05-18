@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <Navbar/>
-      <div className='Central_Default mx-[5%]'>
+      <div className='Central_Default relative mx-[5%]'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/orders" element={<OrderPage />} />

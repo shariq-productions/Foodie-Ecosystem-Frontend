@@ -3,14 +3,18 @@ import { CartContext } from "../CartContext";
 import { useNavigate } from "react-router";
 
 export function OrderPage() {
-    const {cart} = useContext(CartContext);
+    const {AddAdmin,cart} = useContext(CartContext);
     const navigate=useNavigate();
-
+    console.log("cart");
+    console.log(cart);
+    cart.forEach(element => {
+        AddAdmin(element.AdminID);
+    });
     let total=0;
     return (
         <>
-            <div className="shadow-lg rounded-lg p-4 m-10">
-            <div className="grid grid-cols-6 font-[outfit] text-center text-lg border-b-2 border-gray-300 py-2">
+            <div className="shadow-lg overflow-scroll inline-grid rounded-lg p-4 my-10">
+            <div className="grid grid-cols-6 max-md:grid-cols-3 font-[outfit] text-center text-lg border-b-2 border-gray-300 py-2">
                 <div>Item</div>
                 <div>Title</div>
                 <div>Quantity</div>
@@ -41,9 +45,9 @@ export function OrderPage() {
     )
 
 function OrderedFood({name,price,quantity,image,index}){
-    const {RemoveAt,FoodList} = useContext(CartContext);
+    const {RemoveAt} = useContext(CartContext);
     return (
-    <div className="grid grid-cols-6 font-[outfit] text-center text-lg border-b-2 border-gray-300 py-2">
+    <div className="grid grid-cols-6 max-md:grid-cols-3 font-[outfit] text-center text-lg max-md:text-md border-b-2 border-gray-300 py-2">
                 <img className="h-10 place-self-center rounded-lg" src={image} />
                 <div>{name}</div>
                 <div>{quantity}</div>
@@ -52,7 +56,6 @@ function OrderedFood({name,price,quantity,image,index}){
                 <button 
                 className="place-self-center"
                 onClick={() => {
-                    
                     RemoveAt(index);
                 }}
                 >
@@ -63,10 +66,12 @@ function OrderedFood({name,price,quantity,image,index}){
 }
 
 export function CartTotal({total,Button}){
-    const {setTotal} = useContext(CartContext);
+    const {adminList,setTotal,cart} = useContext(CartContext);
+
+    console.log(adminList);
     setTotal(total);
     return (
-        <div className="m-10 inline-flex flex-col w-full max-w-96 h-min font-[outfit] shadow-lg rounded-lg p-4">
+        <div className=" inline-flex flex-col w-full max-w-96 h-min font-[outfit] shadow-lg rounded-lg p-4">
                 <h1 className="border-b-2 text-xl font-semibold">Cart Total</h1>
                 <div className="flex flex-row justify-between w-full text-lg">
                     <p >Cost</p>
@@ -74,11 +79,11 @@ export function CartTotal({total,Button}){
                 </div>
                 <div className="flex flex-row justify-between w-full text-sm font-extralight">
                     <p >Delivery Charges </p>
-                    <p >$5</p>
+                    <p >${5*adminList.length}</p>
                 </div>
                 <div className="flex flex-row justify-between w-full text-lg font-semibold">
                     <p >Total</p>
-                    <p >${total+5}</p>
+                    <p >${(total+5*adminList.length)}</p>
                 </div>
                 {Button()}
             </div>
