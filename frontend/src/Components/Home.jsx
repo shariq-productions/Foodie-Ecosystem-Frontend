@@ -6,15 +6,15 @@ export function Home() {
     console.log("Home Loaded");
     return (
         <>
-        <MainFrame />
-        <Menu />
+        <MainFrame/>    
+        <Menu/>
         </>
     )
 }
 
 export function MainFrame() {
     return (
-      <div className="Central_Default">
+      <section id="HomeBar" className="Central_Default">
         <div className="relative Central_Default w-full">
           <img
             className="object-cover w-full h-full rounded-2xl"
@@ -22,12 +22,12 @@ export function MainFrame() {
             alt="Food"
           />
           <div className="absolute left-10 text-center text-white font-[outfit]">
-             
+
             <div className="text-2xl ">Order your favourite food at</div>
             <div className="text-4xl font-extrabold">Foodie.</div>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -47,9 +47,9 @@ export function MainFrame() {
 ];
       const [currentIndex, setCurrentIndex] = useState(0);
     return (
+        <section id="MenuBar" className="Central_Default">
         <>
-        <>
-        <p className="text-3xl font-semibold">Explore Our Menu</p>
+        <p className="text-3xl font-semibold m-5 underline">Explore Our Menu</p>
         <p className="text-slate-500">dive into a world of rich flavors and culinary delights. Whether you're craving something spicy like biryani or dosa, or in the mood for comfort food like butter chicken or pasta, there's something here for every taste bud. From quick bites like samosas and burgers to hearty meals like pizza and rice dishes, the variety ensures you'll never run out of delicious options. Don’t forget to satisfy your sweet tooth with a tempting dessert at the end. Each item is crafted to delight, so take your time, explore the menu, and enjoy every bite.</p>
         </>
         <div className="flex p-2 max-w-screen overflow-x-scroll">
@@ -67,7 +67,7 @@ export function MainFrame() {
             ))}
         </div>
         <MenuBar key={currentIndex} curr={currentIndex} fdItems={options} />
-        </>
+        </section>
       
     );
   
@@ -96,11 +96,10 @@ export function AboutUs() {
 const MenuBar= memo(
 function MenuBar({curr,fdItems}) {
     const {FoodList}=useContext(CartContext);
-    console.log(fdItems[curr]);
     if (curr != 0) {
     return (
         <>
-        <div className="text-2xl font-semibold">{fdItems[curr]}</div>
+        <div  className="text-2xl font-semibold">{fdItems[curr]}</div>
             <div className="grid grid-cols-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 ">
                 {
                     FoodList.filter((item) => item.category === fdItems[curr]).map((item) => (
@@ -110,6 +109,7 @@ function MenuBar({curr,fdItems}) {
                             image={item.image}
                             value={item.price}
                             description={item.description}
+                            ratings={item.ratings}
                             id={item.id}
                         />
                     ))
@@ -124,13 +124,15 @@ function MenuBar({curr,fdItems}) {
         <div className="text-2xl font-semibold">Top Rated</div>
             <div className="grid grid-cols-5 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 ">
                 {
-                    FoodList.map((item, index) => {if(FoodList[index].ratings>4.5) return <Card_Generator 
-                        name={FoodList[index].name} 
-                        image={FoodList[index].image} 
-                        value={FoodList[index].price} 
-                        description={FoodList[index].description}
-                        id={FoodList[index].id}
-                        key={FoodList[index].id} />; })
+                    FoodList.map((item, index) => {if(item.ratings>4.5) return <Card_Generator 
+                        name={item.name} 
+                        image={item.image} 
+                        value={item.price} 
+                        description={item.description}
+                        id={item.id}
+                        ratings={item.ratings}
+                        AdminID={item.AdminID}
+                        key={item.id} />; })
                 }
             </div>
         </>
@@ -138,7 +140,7 @@ function MenuBar({curr,fdItems}) {
     }
 });
 const Card_Generator= memo(
-    function Card_Generator( {name,description, image, value ,id}) {
+    function Card_Generator( {name,description, image, value ,id,ratings,AdminID}) {
     const { addToCart ,removeFromCart,PresentInCart} = useContext(CartContext);
     const [quantity, setQuantity] = useState(PresentInCart(id));
     return (
@@ -147,7 +149,7 @@ const Card_Generator= memo(
         animation: "fadeIn 0.5s ease-in-out forwards",
     }}>
             <img
-                className="object-cover w-50 h-50 rounded-lg"
+                className="object-cover w-50 h-50 rounded-lg"       
                 src={image}
             />
             <div className="Central_Default -mt-11">
@@ -160,7 +162,7 @@ const Card_Generator= memo(
                 </button>
                 <div className="bg-orange-400 mx-1 text-white rounded-full px-2 text-xl">{quantity}</div>
                 <button onClick={()=>{
-                    addToCart({id, name, description, image,value });
+                    addToCart({id, name, description, image,value,AdminID });
                     setQuantity(count=>count+1);
                     }} 
                     className="opacity-75 active:opacity-100 mx-1">
@@ -171,6 +173,10 @@ const Card_Generator= memo(
             <div className="font-semibold mt-3">{name}</div>
             <div className="text-slate-500 text-sm">{description}</div>
             <div className="text-orange-500">${value}</div>
+            <div className="flex -ml-2">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EAC452"><path d="m384-334 96-74 96 74-36-122 90-64H518l-38-124-38 124H330l90 64-36 122ZM233-120l93-304L80-600h304l96-320 96 320h304L634-424l93 304-247-188-247 188Zm247-369Z"/></svg>
+            <p className="text-yellow-400">{ratings}</p>
+            </div>
         </div>
     ); 
 }
