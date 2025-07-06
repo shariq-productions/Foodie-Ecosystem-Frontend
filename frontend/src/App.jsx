@@ -1,9 +1,8 @@
-
 import {Navbar} from './Components/Navbar'
 import {Home} from './Components/Home'
 import {OrderPage} from './Components/OrderPage'
 import { Route, Routes } from 'react-router'
-import { CheckoutPage } from './Components/CheckoutPage'
+import { AddressPage } from './Components/Address'
 import { TrackPage} from './Components/TrackPage'
 import {Admin} from './Admin/Admin'
 import {loadStripe} from '@stripe/stripe-js';
@@ -35,7 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/orders" element={<OrderPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/addresses" element={<AddressPage />} />
           <Route path="/trackOrders" element={<TrackPage/>}/>
           <Route path="/admin" element={<Admin/>}/>
           <Route path="/pay" element={<Payment stripePromise={stripePromise} />} />
@@ -49,21 +48,21 @@ function App() {
 
 export function AboutUs() {
     return (
-            <footer className=" Central_Default w-screen overflow-visible bottom-0">
-                <img
-                    className="object-cover w-screen h-full"
-                    src="https://lekvilla.com/wp-content/uploads/2015/07/BACKGROUND-FOOTER-1.jpg"
-                    alt="Food"
-                />
-                <div className="absolute w-full grid grid-cols-2 text-center text-white font-[outfit]  font-semibold">
-                    <div>Contact Us</div>
-                    <div>Sponsors</div>
-                    <div>Mobile App</div>
-                    <div>Founders</div>
-                    <div>Our Achievements</div>
-                    <p>Our Team</p>
-                </div>
-            </footer>
+        <footer className="relative w-screen overflow-hidden bottom-0 h-40 mt-5">
+            <img
+                className="object-cover object-top w-full h-full"
+                src="https://lekvilla.com/wp-content/uploads/2015/07/BACKGROUND-FOOTER-1.jpg"
+                alt="Food"
+            />
+            <div className="absolute inset-0 w-full flex flex-wrap items-end justify-center text-white font-[outfit] font-medium text-sm pb-2">
+                <div className="mx-2">Contact Us</div>
+                <div className="mx-2">Sponsors</div>
+                <div className="mx-2">Mobile App</div>
+                <div className="mx-2">Founders</div>
+                <div className="mx-2">Our Achievements</div>
+                <div className="mx-2">Our Team</div>
+            </div>
+        </footer>
     );
 }
 export default App

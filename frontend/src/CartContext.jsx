@@ -357,6 +357,97 @@ const LogOutFunc=()=>{
     setver(false);
 }
 
+const [CurrAdd,setCurrAdd]=useState(0);
+
+        const addresses=[{
+  AddressName: "Home",
+  email_address: "adnan@gmail.com",
+  state: "West Bengal",
+  zip_code: "700014",
+  country: "India",
+  phone_number: "9163294332",
+  street: "Karaya Street",
+  city: "Kolkata"
+},
+{
+  AddressName: "Office",
+  email_address: "priya.sharma@example.com",
+  state: "Maharashtra",
+  zip_code: "400001",
+  country: "India",
+  phone_number: "9876543210",
+  street: "Marine Drive",
+  city: "Mumbai"
+},
+{
+  AddressName: "Parents",
+  email_address: "rahul.verma@example.com",
+  state: "Delhi",
+  zip_code: "110001",
+  country: "India",
+  phone_number: "9123456789",
+  street: "Connaught Place",
+  city: "New Delhi"
+},{
+  AddressName: "Home",
+  email_address: "adnan@gmail.com",
+  state: "West Bengal",
+  zip_code: "700014",
+  country: "India",
+  phone_number: "9163294332",
+  street: "Karaya Street",
+  city: "Kolkata"
+},
+{
+  AddressName: "Office",
+  email_address: "priya.sharma@example.com",
+  state: "Maharashtra",
+  zip_code: "400001",
+  country: "India",
+  phone_number: "9876543210",
+  street: "Marine Drive",
+  city: "Mumbai"
+},
+{
+  AddressName: "Parents",
+  email_address: "rahul.verma@example.com",
+  state: "Delhi",
+  zip_code: "110001",
+  country: "India",
+  phone_number: "9123456789",
+  street: "Connaught Place",
+  city: "New Delhi"
+},{
+  AddressName: "Home",
+  email_address: "adnan@gmail.com",
+  state: "West Bengal",
+  zip_code: "700014",
+  country: "India",
+  phone_number: "9163294332",
+  street: "Karaya Street",
+  city: "Kolkata"
+},
+{
+  AddressName: "Office",
+  email_address: "priya.sharma@example.com",
+  state: "Maharashtra",
+  zip_code: "400001",
+  country: "India",
+  phone_number: "9876543210",
+  street: "Marine Drive",
+  city: "Mumbai"
+},
+{
+  AddressName: "Parents",
+  email_address: "rahul.verma@example.com",
+  state: "Delhi",
+  zip_code: "110001",
+  country: "India",
+  phone_number: "9123456789",
+  street: "Connaught Place",
+  city: "New Delhi"
+}];
+
 
 
 //Category Create,Add,View All
@@ -378,8 +469,9 @@ const LogOutFunc=()=>{
 
             alert,alertMessage,quan,setQuan,activeCart,
 
-            SignUpFunc,LoginFunc, LogOutFunc ,LoadUP,
-                        }}>
+            SignUpFunc,LoginFunc, LogOutFunc ,LoadUP,CurrAdd,setCurrAdd,Alert
+            
+            ,addresses}}>
             {children}
         </CartContext.Provider>
     );
