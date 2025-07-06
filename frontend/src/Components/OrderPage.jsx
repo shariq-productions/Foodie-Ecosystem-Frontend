@@ -1,4 +1,4 @@
-import {useContext,useState, useEffect } from "react";
+import {useContext, useEffect } from "react";
 import { CartContext } from "../CartContext";
 import { useNavigate } from "react-router";
 
@@ -28,7 +28,7 @@ export function OrderPage() {
                    cart.admin?cart.admin.map((item1) => {
                     adminL++;
                         return (                        
-                            item1.items.map((item,index)=>{
+                            item1.items.map((item)=>{
                                 total+=item.price*item.quantity;
                         return <OrderedFood
                             adminID={item1.admin_id}
@@ -47,13 +47,13 @@ export function OrderPage() {
             </div>
             <CartTotal total={total} adminL={adminL} Button={() => {
                 return (
-                    <button className="bg-orange-400 text-white rounded-lg mt-4 active:bg-orange-500" onClick={()=>{navigate("/Checkout")}}>Check Out</button>
+                    <button className="bg-orange-400 text-white rounded-lg mt-4 active:bg-orange-500" onClick={()=>{navigate("/pay")}}>Check Out</button>
                 )
             }}/>
         </>
     )
 
-function OrderedFood({adminID,name,price,quantity,id,key}){
+function OrderedFood({adminID,name,price,quantity,id}){
     const {RemoveAt} = useContext(CartContext);
     return (
     <div className="grid grid-cols-6 font-[outfit] text-center text-lg max-md:text-md border-b-2 border-gray-300 py-2">
