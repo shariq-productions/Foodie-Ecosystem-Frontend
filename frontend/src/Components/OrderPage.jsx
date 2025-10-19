@@ -1,6 +1,6 @@
 import {useContext,useState, useEffect } from "react";
 import { CartContext } from "../CartContext";
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 
 export function OrderPage() {
 
@@ -9,7 +9,7 @@ export function OrderPage() {
             activeCart();
     },[accessToken])
     console.log("Cart",cart);
-    const navigate=useNavigate();
+    const router=useRouter();
     let total=0;
     let adminL=0;
     return (
@@ -47,7 +47,7 @@ export function OrderPage() {
             </div>
             <CartTotal total={total} adminL={adminL} Button={() => {
                 return (
-                    <button className="bg-orange-400 text-white rounded-lg mt-4 active:bg-orange-500" onClick={()=>{navigate("/Checkout")}}>Check Out</button>
+                    <button className="bg-orange-400 text-white rounded-lg mt-4 active:bg-orange-500" onClick={()=>{router.push("/Checkout")}}>Check Out</button>
                 )
             }}/>
         </>
