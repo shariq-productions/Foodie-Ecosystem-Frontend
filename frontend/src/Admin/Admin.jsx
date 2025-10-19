@@ -18,7 +18,6 @@ export function Admin() {
         <div onClick={()=>{setcurrOp("Add Item")}} className={"w-full p-1 mx-3 flex justify-center  " +(currOp=="Add Item"?"bg-amber-500 text-white shadow-md  shadow-amber-500":"")}>Add Item</div>
         <div onClick={()=>{setcurrOp("List-Items")}} className={"w-full p-1 mx-3   flex justify-center  " +(currOp=="List-Items"?"bg-amber-500 text-white shadow-md  shadow-amber-500":"")}>List-Items</div>
         <div onClick={()=>{setcurrOp("Track Orders")}} className={"w-full p-1 mx-3 flex justify-center  " +(currOp=="Track Orders"?"bg-amber-500 text-white shadow-md  shadow-amber-500":"")}>Track Orders</div>
-
         </div>
             {
                 (currOp=="Add Item")?<AddItem setter={()=>{setcurrOp("List-Items")}}/>:((currOp=="List-Items")?<ListItem/>:<TrackOrder/>)
@@ -26,4 +25,6 @@ export function Admin() {
         </div>
     )
 }
+
+
 

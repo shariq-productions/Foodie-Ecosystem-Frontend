@@ -26,9 +26,9 @@ function App() {
       <div className='Central_Default relative mx-[5%]'>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/orders" element={<OrderPage />} />
+          <Route path="/cart" element={<OrderPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/trackOrders" element={<TrackPage/>}/>
+          <Route path="/orders" element={<TrackPage/>}/>
           <Route path="/admin" element={<Admin/>}/>
           <Route path="/pay" element={<Payment stripePromise={stripePromise} />} />
           <Route path="/completion" element={<Completion stripePromise={stripePromise} />} />
