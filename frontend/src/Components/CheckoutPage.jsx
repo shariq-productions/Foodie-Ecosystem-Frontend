@@ -23,7 +23,7 @@ export function CheckoutPage() {
 }
 function OrderDone({ refs }) {
     const { PostAddress } = useContext(CartContext);
-    const navigate=useNavigate();
+    const router=useRouter();
 
 
     return (
@@ -42,7 +42,7 @@ function OrderDone({ refs }) {
                     street: refs.Street.current?.value || "",
                     city: refs.City.current?.value || "",
                 };
-                PostAddress(deliveryInfo).then(()=>{navigate("/pay")});
+                PostAddress(deliveryInfo).then(()=>{router.push("/pay")});
             }}
         >
             Submit
