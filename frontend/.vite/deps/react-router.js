@@ -1606,7 +1606,7 @@ function createRouter(init) {
     pendingRevalidationDfd == null ? void 0 : pendingRevalidationDfd.resolve();
     pendingRevalidationDfd = null;
   }
-  async function navigate(to, opts) {
+  async function router.push(to, opts) {
     if (typeof to === "number") {
       init.history.go(to);
       return;
@@ -1656,7 +1656,7 @@ function createRouter(init) {
             reset: void 0,
             location: nextLocation
           });
-          navigate(to, opts);
+          router.push(to, opts);
         },
         reset() {
           let blockers = new Map(state.blockers);
@@ -5190,14 +5190,14 @@ function useMatch(pattern) {
     [pathname, pattern]
   );
 }
-var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
+var navigateEffectWarning = `You should call router.push() in a React.useEffect(), not when your component is first rendered.`;
 function useIsomorphicLayoutEffect(cb) {
   let isStatic = React2.useContext(NavigationContext).static;
   if (!isStatic) {
     React2.useLayoutEffect(cb);
   }
 }
-function useNavigate() {
+function userouter.push() {
   let { isDataRoute } = React2.useContext(RouteContext);
   return isDataRoute ? useNavigateStable() : useNavigateUnstable();
 }
@@ -5206,7 +5206,7 @@ function useNavigateUnstable() {
     useInRouterContext(),
     // TODO: This error is probably because they somehow have 2 versions of the
     // router loaded. We can help them understand how to avoid that.
-    `useNavigate() may be used only in the context of a <Router> component.`
+    `userouter.push() may be used only in the context of a <Router> component.`
   );
   let dataRouterContext = React2.useContext(DataRouterContext);
   let { basename, navigator } = React2.useContext(NavigationContext);
@@ -5748,9 +5748,9 @@ function useNavigateStable() {
       warning(activeRef.current, navigateEffectWarning);
       if (!activeRef.current) return;
       if (typeof to === "number") {
-        router.navigate(to);
+        router.router.push(to);
       } else {
-        await router.navigate(to, { fromRouteId: id, ...options });
+        await router.router.push(to, { fromRouteId: id, ...options });
       }
     },
     [router, id]
@@ -5990,12 +5990,12 @@ function RouterProvider({
     return {
       createHref: router.createHref,
       encodeLocation: router.encodeLocation,
-      go: (n) => router.navigate(n),
-      push: (to, state2, opts) => router.navigate(to, {
+      go: (n) => router.router.push(n),
+      push: (to, state2, opts) => router.router.push(to, {
         state: state2,
         preventScrollReset: opts == null ? void 0 : opts.preventScrollReset
       }),
-      replace: (to, state2, opts) => router.navigate(to, {
+      replace: (to, state2, opts) => router.router.push(to, {
         replace: true,
         state: state2,
         preventScrollReset: opts == null ? void 0 : opts.preventScrollReset
@@ -6075,7 +6075,7 @@ function MemoryRouter({
     }
   );
 }
-function Navigate({
+function router.push({
   to,
   replace: replace2,
   state,
@@ -6094,7 +6094,7 @@ function Navigate({
   );
   let { matches } = React3.useContext(RouteContext);
   let { pathname: locationPathname } = useLocation();
-  let navigate = useNavigate();
+  let navigate = userouter.push();
   let path = resolveTo(
     to,
     getResolveToMatches(matches),
@@ -6103,7 +6103,7 @@ function Navigate({
   );
   let jsonPath = JSON.stringify(path);
   React3.useEffect(() => {
-    navigate(JSON.parse(jsonPath), { replace: replace2, state, relative });
+    router.push(JSON.parse(jsonPath), { replace: replace2, state, relative });
   }, [navigate, jsonPath, relative, replace2, state]);
   return null;
 }
@@ -9465,7 +9465,7 @@ function useLinkClickHandler(to, {
   relative,
   viewTransition
 } = {}) {
-  let navigate = useNavigate();
+  let navigate = userouter.push();
   let location = useLocation();
   let path = useResolvedPath(to, { relative });
   return React10.useCallback(
@@ -9473,7 +9473,7 @@ function useLinkClickHandler(to, {
       if (shouldProcessLinkClick(event, target)) {
         event.preventDefault();
         let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location) === createPath(path);
-        navigate(to, {
+        router.push(to, {
           replace: replace2,
           state,
           preventScrollReset,
@@ -9516,14 +9516,14 @@ function useSearchParams(defaultInit) {
     ),
     [location.search]
   );
-  let navigate = useNavigate();
+  let navigate = userouter.push();
   let setSearchParams = React10.useCallback(
     (nextInit, navigateOptions) => {
       const newSearchParams = createSearchParams(
         typeof nextInit === "function" ? nextInit(searchParams) : nextInit
       );
       hasSetSearchParamsRef.current = true;
-      navigate("?" + newSearchParams, navigateOptions);
+      router.push("?" + newSearchParams, navigateOptions);
     },
     [navigate, searchParams]
   );
@@ -9555,7 +9555,7 @@ function useSubmit() {
           flushSync: options.flushSync
         });
       } else {
-        await router.navigate(options.action || action, {
+        await router.router.push(options.action || action, {
           preventScrollReset: options.preventScrollReset,
           formData,
           body,
@@ -9967,17 +9967,17 @@ function getStatelessNavigator() {
     encodeLocation,
     push(to) {
       throw new Error(
-        `You cannot use navigator.push() on the server because it is a stateless environment. This error was probably triggered when you did a \`navigate(${JSON.stringify(to)})\` somewhere in your app.`
+        `You cannot use navigator.push() on the server because it is a stateless environment. This error was probably triggered when you did a \`router.push(${JSON.stringify(to)})\` somewhere in your app.`
       );
     },
     replace(to) {
       throw new Error(
-        `You cannot use navigator.replace() on the server because it is a stateless environment. This error was probably triggered when you did a \`navigate(${JSON.stringify(to)}, { replace: true })\` somewhere in your app.`
+        `You cannot use navigator.replace() on the server because it is a stateless environment. This error was probably triggered when you did a \`router.push(${JSON.stringify(to)}, { replace: true })\` somewhere in your app.`
       );
     },
     go(delta) {
       throw new Error(
-        `You cannot use navigator.go() on the server because it is a stateless environment. This error was probably triggered when you did a \`navigate(${delta})\` somewhere in your app.`
+        `You cannot use navigator.go() on the server because it is a stateless environment. This error was probably triggered when you did a \`router.push(${delta})\` somewhere in your app.`
       );
     },
     back() {
@@ -10056,7 +10056,7 @@ function createStaticRouter(routes, context, opts = {}) {
     enableScrollRestoration() {
       throw msg("enableScrollRestoration");
     },
-    navigate() {
+    router.push() {
       throw msg("navigate");
     },
     fetch() {
